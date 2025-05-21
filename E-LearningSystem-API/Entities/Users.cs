@@ -11,7 +11,7 @@
         public DateTime? OTPExipry { get; set; }
         public int RoleId { get; set; }
         public bool IsVerfied { get; set; } = false;
-        public bool? IsLoggedIn { get; set; }
+        public bool? IsLoggedIn { get; set; } = false;
         public DateTime? LastLoginTime { get; set; }
     }
 }

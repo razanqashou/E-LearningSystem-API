@@ -1,4 +1,6 @@
 using E_LearningSystem_API.Context;
+using E_LearningSystem_API.Interfaces;
+using E_LearningSystem_API.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<E_LearnningContext>(opt => opt.UseSqlServer("Data Source=MSI\\SQLEXPRESS13;Database=E-LearningDB;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True;"));
+builder.Services.AddScoped<IAuthIterface, AuthServices>();
 
 var app = builder.Build();
 
