@@ -1,6 +1,8 @@
 ﻿using E_LearningSystem_API.Context;
 using E_LearningSystem_API.DTOs.Request.Verfication;
 using E_LearningSystem_API.Entities;
+using E_LearningSystem_API.Helpers.Hashing;
+using E_LearningSystem_API.Helpers.Token;
 using E_LearningSystem_API.Helpers.Validations;
 using E_LearningSystem_API.Interfaces;
 
@@ -21,7 +23,11 @@ namespace E_LearningSystem_API.Services
 
             try
             {
-                var user=_context.Users.Where(x=>x.Id==input.UserId && x.IsLoggedIn == false).SingleOrDefault();
+                var user=_context.Users.Where(x=>x.Id==input.UserId 
+                && x.IsLoggedIn == false 
+                && x.OTPExipry ==null
+                && x.IsVerfied==true
+                ).SingleOrDefault();
 
                 if (user == null)
                 {
@@ -36,7 +42,7 @@ namespace E_LearningSystem_API.Services
                     return "not compatable";
                 }
 
-                input.Password = input.ConfirmPassword;
+                user.Password =HashingHelper.HashValue384( input.ConfirmPassword);
 
                 _context.Update(user);
                 _context.SaveChanges();
@@ -95,8 +101,15 @@ namespace E_LearningSystem_API.Services
                     _context.Update(user);
                     _context.SaveChanges();
 
-                   // var response = TokenHelper.GenerateJWTToken(user.Id.ToString(), "Client");
-                    return "login";
+                    var response = TokenHelper.GenerateJWTToken(user.Id.ToString(), "Client");
+                   if(  TokenHelper.IsValidToken(response)!= "Valid")
+                    {
+                        return TokenHelper.IsValidToken(response) ;
+
+                    }
+  
+                       return response;
+                   
 
                 }
                 else if (input.Type == "ResetPass")

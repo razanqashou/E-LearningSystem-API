@@ -5,7 +5,7 @@ namespace E_LearningSystem_API.Helpers.Hashing
 {
     public static class HashingHelper
     {
-        public static string HashValue(string input)
+        public static string HashValue384(string input)
         {
             var inputByte=Encoding.UTF8.GetBytes(input);
 
