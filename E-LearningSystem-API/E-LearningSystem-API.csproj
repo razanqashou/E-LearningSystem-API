@@ -21,13 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="DTOs\Response\" />
     <Folder Include="DTOs\Request\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Helpers\" />
+    <Folder Include="Helpers\Validations\" />
     <Folder Include="Uplodes\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
